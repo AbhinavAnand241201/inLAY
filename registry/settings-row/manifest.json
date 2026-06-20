@@ -1,0 +1,22 @@
+{
+  "name": "settings-row",
+  "kind": "uikit",
+  "title": "Settings Row",
+  "description": "A polished settings list row — SF Symbol in a rounded color tile, title with optional subtitle, and a trailing chevron, value, or switch. Springy press feedback and haptics.",
+  "category": "controls",
+  "minIOS": "16.0",
+  "swiftVersion": "5.9",
+  "files": [
+    {
+      "from": "registry/settings-row/SettingsRow.swift",
+      "to": "Inlay/Components/SettingsRow.swift"
+    }
+  ],
+  "dependencies": ["spring-animator"],
+  "usage": "let row = SettingsRow(model: .init(\n    icon: UIImage(systemName: \"bell.badge.fill\"),\n    title: \"Notifications\",\n    subtitle: \"Sounds, badges, banners\",\n    accessory: .chevron)) {\n    print(\"open notifications\")\n}\nview.addSubview(row)",
+  "variants": [
+    { "id": "chevron", "title": "Chevron", "description": "Drill-in row with a trailing chevron. The default.", "config": { "accessory": ".chevron" } },
+    { "id": "toggle", "title": "Toggle", "description": "Row with a trailing switch; use onToggle.", "config": { "accessory": ".toggle(true)" } },
+    { "id": "value", "title": "Value", "description": "Row showing a current value plus chevron.", "config": { "accessory": ".value(\"On\")" } }
+  ]
+}

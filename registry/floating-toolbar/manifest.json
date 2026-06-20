@@ -1,0 +1,40 @@
+{
+  "name": "floating-toolbar",
+  "kind": "uikit",
+  "title": "Floating Toolbar",
+  "description": "A floating, pill-shaped toolbar with a glass or solid background, spring entrance animation, tactile press feedback, and an optional selection highlight.",
+  "category": "navigation",
+  "minIOS": "16.0",
+  "swiftVersion": "5.9",
+  "files": [
+    {
+      "from": "registry/floating-toolbar/FloatingToolbar.swift",
+      "to": "Inlay/Components/FloatingToolbar.swift"
+    }
+  ],
+  "dependencies": ["spring-animator"],
+  "usage": "let toolbar = FloatingToolbar(items: [\n    .init(icon: UIImage(systemName: \"house.fill\"))      { print(\"home\") },\n    .init(icon: UIImage(systemName: \"magnifyingglass\")) { print(\"search\") },\n])\nview.addSubview(toolbar)\nNSLayoutConstraint.activate([\n    toolbar.centerXAnchor.constraint(equalTo: view.centerXAnchor),\n    toolbar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),\n])",
+  "variants": [
+    {
+      "id": "glass",
+      "title": "Glass",
+      "description": "Translucent blurred background. The default.",
+      "config": { "background": "glass(.systemThinMaterial)" }
+    },
+    {
+      "id": "solid",
+      "title": "Solid",
+      "description": "Opaque background that adapts to light/dark mode.",
+      "config": { "background": "solid(.secondarySystemBackground)" }
+    },
+    {
+      "id": "tinted",
+      "title": "Tinted",
+      "description": "Accent-tinted, playful spring.",
+      "config": {
+        "accentColor": ".systemPurple",
+        "animation": ".playful"
+      }
+    }
+  ]
+}

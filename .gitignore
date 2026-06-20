@@ -1,0 +1,21 @@
+# Xcode / Swift build artifacts
+.build/
+DerivedData/
+*.xcodeproj/xcuserdata/
+*.xcworkspace/xcuserdata/
+.DS_Store
+
+# XcodeGen output (source of truth is demo/InlayDemo/project.yml)
+demo/InlayDemo/InlayDemo.xcodeproj/
+
+# CLI build
+cli/.build/
+
+# Node / website
+node_modules/
+website/.next/
+website/out/
+website/dist/
+
+# Local sandboxes
+/tmp-sandbox/

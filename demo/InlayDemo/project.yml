@@ -1,0 +1,41 @@
+# XcodeGen spec for the Inlay demo app.
+# Regenerate the .xcodeproj with:  cd demo/InlayDemo && xcodegen generate
+#
+# The demo compile-tests the registry components by pulling the real source
+# straight from ../../registry — no copies, so the demo can never drift from
+# what the CLI ships.
+name: InlayDemo
+options:
+  bundleIdPrefix: dev.inlay
+  deploymentTarget:
+    iOS: "16.0"
+  createIntermediateGroups: true
+targets:
+  InlayDemo:
+    type: application
+    platform: iOS
+    sources:
+      - path: Sources
+      # The registry components, referenced in place (the "buildable folder").
+      - path: ../../registry/spring-animator/Inlay+SpringAnimator.swift
+        group: Inlay
+      - path: ../../registry/floating-toolbar/FloatingToolbar.swift
+        group: Inlay/Components
+      - path: ../../registry/loading-indicator/LoadingIndicator.swift
+        group: Inlay/Components
+      - path: ../../registry/status-feedback/StatusFeedbackView.swift
+        group: Inlay/Components
+      - path: ../../registry/settings-row/SettingsRow.swift
+        group: Inlay/Components
+    settings:
+      base:
+        INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
+        INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents: YES
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        INFOPLIST_KEY_UISupportedInterfaceOrientations: "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight"
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: dev.inlay.InlayDemo
+        TARGETED_DEVICE_FAMILY: "1,2"
+        SWIFT_VERSION: "5.9"
+        MARKETING_VERSION: "0.1.0"
+        CURRENT_PROJECT_VERSION: "1"

@@ -1,0 +1,21 @@
+{
+  "name": "status-feedback",
+  "kind": "uikit",
+  "title": "Status Feedback",
+  "description": "An animated success/error badge — a ring strokes on, the checkmark or cross draws after it, and the badge springs in with a matching haptic. Perfect for confirmation overlays.",
+  "category": "feedback",
+  "minIOS": "16.0",
+  "swiftVersion": "5.9",
+  "files": [
+    {
+      "from": "registry/status-feedback/StatusFeedbackView.swift",
+      "to": "Inlay/Components/StatusFeedbackView.swift"
+    }
+  ],
+  "dependencies": ["spring-animator"],
+  "usage": "let done = StatusFeedbackView()\nview.addSubview(done)\ndone.translatesAutoresizingMaskIntoConstraints = false\nNSLayoutConstraint.activate([\n    done.centerXAnchor.constraint(equalTo: view.centerXAnchor),\n    done.centerYAnchor.constraint(equalTo: view.centerYAnchor),\n])",
+  "variants": [
+    { "id": "success", "title": "Success", "description": "Green ring + checkmark, success haptic. The default.", "config": { "status": ".success" } },
+    { "id": "error", "title": "Error", "description": "Red ring + cross, error haptic.", "config": { "status": ".error" } }
+  ]
+}

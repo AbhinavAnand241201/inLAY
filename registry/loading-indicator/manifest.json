@@ -1,0 +1,22 @@
+{
+  "name": "loading-indicator",
+  "kind": "uikit",
+  "title": "Loading Indicator",
+  "description": "A looping loading indicator with three styles — rotating arc, pulsing dots, and equalizer bars. Auto-starts on screen, zero dependencies.",
+  "category": "feedback",
+  "minIOS": "16.0",
+  "swiftVersion": "5.9",
+  "files": [
+    {
+      "from": "registry/loading-indicator/LoadingIndicator.swift",
+      "to": "Inlay/Components/LoadingIndicator.swift"
+    }
+  ],
+  "dependencies": [],
+  "usage": "let loader = LoadingIndicator()\nview.addSubview(loader)\nloader.translatesAutoresizingMaskIntoConstraints = false\nNSLayoutConstraint.activate([\n    loader.centerXAnchor.constraint(equalTo: view.centerXAnchor),\n    loader.centerYAnchor.constraint(equalTo: view.centerYAnchor),\n])",
+  "variants": [
+    { "id": "arc", "title": "Arc", "description": "A single rotating stroked arc. The default.", "config": { "style": ".arc" } },
+    { "id": "dots", "title": "Dots", "description": "Three dots pulsing in sequence.", "config": { "style": ".dots" } },
+    { "id": "bars", "title": "Bars", "description": "Equalizer-style bouncing bars.", "config": { "style": ".bars" } }
+  ]
+}

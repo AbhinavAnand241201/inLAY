@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #ffffff;
+  color: #000000;
+}
+
+/* Brutalist building blocks */
+@layer components {
+  .brut-border {
+    @apply border-[3px] border-ink;
+  }
+  .brut-card {
+    @apply border-[3px] border-ink bg-paper shadow-brut;
+  }
+  .brut-btn {
+    @apply inline-flex items-center justify-center gap-2 border-[3px] border-ink
+           bg-ink px-5 py-3 font-mono text-sm font-bold uppercase tracking-wider
+           text-paper shadow-brut-sm transition-all
+           hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-brut
+           active:translate-x-[2px] active:translate-y-[2px] active:shadow-none;
+  }
+  .brut-btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 border-[3px] border-ink
+           bg-paper px-5 py-3 font-mono text-sm font-bold uppercase tracking-wider
+           text-ink shadow-brut-sm transition-all
+           hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-brut
+           active:translate-x-[2px] active:translate-y-[2px] active:shadow-none;
+  }
+  .label {
+    @apply font-mono text-xs font-bold uppercase tracking-[0.2em];
+  }
+}
+
+/* Hide scrollbars on the marquee */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

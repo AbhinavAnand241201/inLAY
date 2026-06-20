@@ -1,0 +1,16 @@
+{
+  "name": "spring-animator",
+  "kind": "primitive",
+  "title": "Spring Animator",
+  "description": "Shared Inlay namespace + a designer-friendly spring token and a one-line UIViewPropertyAnimator wrapper. Installed once; many components depend on it.",
+  "category": "primitive",
+  "minIOS": "16.0",
+  "swiftVersion": "5.9",
+  "files": [
+    {
+      "from": "registry/spring-animator/Inlay+SpringAnimator.swift",
+      "to": "Inlay/Inlay+SpringAnimator.swift"
+    }
+  ],
+  "dependencies": []
+}

@@ -21,7 +21,7 @@ scripts/         build-registry.swift → registry.json ; sync-registry.sh
 registry.json    Generated artifact the CLI + website consume.
 cli/             The `inlay` CLI (Swift + swift-argument-parser).
 demo/InlayDemo/  Xcode app that compile-tests the registry components.
-website/         Static gallery that reads registry.json (zero build step).
+website/         Next.js gallery (brutalist B&W) that reads data/registry.json.
 docs/            FLOATING_TOOLBAR_TEST.md — the on-device usability pass.
 ```
 
@@ -54,8 +54,8 @@ cd demo/InlayDemo && xcodegen generate && \
   xcodebuild -project InlayDemo.xcodeproj -scheme InlayDemo \
     -destination 'generic/platform=iOS Simulator' build
 
-# Preview the website
-cd website && python3 -m http.server 8000   # → http://localhost:8000
+# Run the website (Next.js)
+cd website && npm install && npm run dev     # → http://localhost:3000
 ```
 
 ## Adding a component
