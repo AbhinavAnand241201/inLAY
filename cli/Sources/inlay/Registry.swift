@@ -82,12 +82,13 @@ struct Registry: Codable {
 // MARK: - Loading
 
 enum RegistrySource {
-    /// Global fallbacks (tagged, immutable) used when no local registry is found
-    /// — e.g. a bare binary with no resource bundle. jsDelivr first (edge-cached
-    /// worldwide), then GitHub raw (always available, no cache warming).
+    /// Global fallbacks used when no local registry is found — e.g. a bare binary
+    /// with no resource bundle. GitHub raw first (always current + reliable, no
+    /// cache warming), then jsDelivr (edge-cached worldwide). Pinned to `main` so
+    /// the fallback never needs a per-release edit.
     static let remoteFallbacks = [
-        "https://cdn.jsdelivr.net/gh/AbhinavAnand241201/inLAY@v0.1.0/registry.json",
-        "https://raw.githubusercontent.com/AbhinavAnand241201/inLAY/v0.1.0/registry.json",
+        "https://raw.githubusercontent.com/AbhinavAnand241201/inLAY/main/registry.json",
+        "https://cdn.jsdelivr.net/gh/AbhinavAnand241201/inLAY@main/registry.json",
     ]
 
     /// Resolution order: explicit override → env var → local resource (bundle or

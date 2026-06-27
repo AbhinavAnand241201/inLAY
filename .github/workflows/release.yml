@@ -1,0 +1,76 @@
+name: Release
+
+# On every version tag (e.g. v0.1.1): compute the source-tarball SHA-256,
+# publish a GitHub Release, and bump the Homebrew formula in the tap repo.
+# Manual runs are supported via workflow_dispatch with a tag input.
+
+on:
+  push:
+    tags: ["v*.*.*"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag to release (must already exist), e.g. v0.1.1"
+        required: true
+
+permissions:
+  contents: write # create the GitHub Release on this repo
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      TAP_TOKEN: ${{ secrets.TAP_TOKEN }}
+    steps:
+      - name: Resolve tag + tarball URL
+        id: meta
+        run: |
+          TAG="${{ github.event.inputs.tag || github.ref_name }}"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "url=https://github.com/${{ github.repository }}/archive/refs/tags/$TAG.tar.gz" >> "$GITHUB_OUTPUT"
+
+      - name: Compute SHA-256 of the source tarball
+        id: sha
+        run: |
+          URL="${{ steps.meta.outputs.url }}"
+          for i in 1 2 3 4 5 6; do
+            code=$(curl -sL -o tarball.tgz -w '%{http_code}' "$URL")
+            [ "$code" = "200" ] && break
+            echo "tarball not ready (HTTP $code), retry $i…"; sleep 5
+          done
+          SHA=$(sha256sum tarball.tgz | cut -d' ' -f1)
+          echo "sha256=$SHA" >> "$GITHUB_OUTPUT"
+          echo "Tarball SHA-256: $SHA"
+
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="${{ steps.meta.outputs.tag }}"
+          gh release view "$TAG" --repo "${{ github.repository }}" >/dev/null 2>&1 && exit 0
+          gh release create "$TAG" --repo "${{ github.repository }}" \
+            --title "Inlay $TAG" --generate-notes
+
+      - name: Bump the Homebrew tap formula
+        # Requires a repo secret TAP_TOKEN: a PAT with write access to
+        # AbhinavAnand241201/homebrew-tap. Skipped automatically if unset.
+        if: ${{ env.TAP_TOKEN != '' }}
+        run: |
+          TAG="${{ steps.meta.outputs.tag }}"
+          SHA="${{ steps.sha.outputs.sha256 }}"
+          git clone "https://x-access-token:${TAP_TOKEN}@github.com/AbhinavAnand241201/homebrew-tap.git" tap
+          cd tap
+          if [ ! -f Formula/inlay.rb ]; then
+            echo "::error::Formula/inlay.rb not found in the tap. Create the tap first."
+            exit 1
+          fi
+          sed -i -E "s#archive/refs/tags/v[0-9.]+\.tar\.gz#archive/refs/tags/${TAG}.tar.gz#" Formula/inlay.rb
+          sed -i -E "s/sha256 \"[a-f0-9]+\"/sha256 \"${SHA}\"/" Formula/inlay.rb
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet; then
+            echo "Formula already up to date."; exit 0
+          fi
+          git commit -am "inlay ${TAG}"
+          git push origin HEAD:main
+          echo "✓ Bumped homebrew-tap formula to ${TAG} (${SHA})."
