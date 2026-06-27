@@ -22,7 +22,7 @@ export function Footer() {
         <div>
           <div className="label text-paper/50">Install</div>
           <code className="mt-3 block border-[3px] border-paper/40 px-3 py-2 font-mono text-xs">
-            brew install inlay/tap/inlay
+            brew install AbhinavAnand241201/tap/inlay
           </code>
         </div>
       </div>

@@ -7,11 +7,26 @@
 > Search a component, run one command, and the source lands in your Xcode
 > project ready to customize. You own the code; Inlay isn't a dependency you import.
 
-**Gallery:** https://abhinavanand241201.github.io/inLAY/ · 15 components and counting.
+**Gallery:** https://abhinavanand241201.github.io/inLAY/ · 35 components and counting.
+
+## Install the CLI
+
+```bash
+# One-line installer (no Homebrew tap needed) — builds from source:
+curl -fsSL https://raw.githubusercontent.com/AbhinavAnand241201/inLAY/main/cli/install.sh | bash
+
+# Or via the Homebrew tap (once it's published — see below):
+brew install AbhinavAnand241201/tap/inlay
+```
+
+Then, in any Xcode project:
 
 ```bash
 inlay add floating-toolbar
 ```
+
+The registry is also globally available as JSON (for the website / `--registry`):
+`https://cdn.jsdelivr.net/gh/AbhinavAnand241201/inLAY@v0.1.0/registry.json`.
 
 See [`ROADMAP.md`](ROADMAP.md) for the product vision, [`DETAILS.md`](DETAILS.md)
 for the architecture decisions, and [`CLAUDE.md`](CLAUDE.md) for the build contract.

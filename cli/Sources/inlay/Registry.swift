@@ -82,16 +82,53 @@ struct Registry: Codable {
 // MARK: - Loading
 
 enum RegistrySource {
-    /// Resolution order: explicit override → env var → bundled resource.
+    /// Global fallbacks (tagged, immutable) used when no local registry is found
+    /// — e.g. a bare binary with no resource bundle. jsDelivr first (edge-cached
+    /// worldwide), then GitHub raw (always available, no cache warming).
+    static let remoteFallbacks = [
+        "https://cdn.jsdelivr.net/gh/AbhinavAnand241201/inLAY@v0.1.0/registry.json",
+        "https://raw.githubusercontent.com/AbhinavAnand241201/inLAY/v0.1.0/registry.json",
+    ]
+
+    /// Resolution order: explicit override → env var → local resource (bundle or
+    /// next to the executable) → global CDN. We locate the local resource by hand
+    /// rather than via `Bundle.module`, whose generated accessor *crashes* when
+    /// the bundle is absent (e.g. a copied binary).
     static func load(override: String?) throws -> Registry {
         if let override { return try loadFrom(string: override) }
         if let env = ProcessInfo.processInfo.environment["INLAY_REGISTRY"] {
             return try loadFrom(string: env)
         }
-        guard let url = Bundle.module.url(forResource: "registry", withExtension: "json") else {
-            throw InlayError.registryUnavailable
+        for url in localCandidates() {
+            if let data = try? Data(contentsOf: url) { return try decode(data) }
         }
-        return try decode(Data(contentsOf: url))
+        // Global fallback so `inlay` works even if the resource didn't travel.
+        for remote in remoteFallbacks {
+            if let url = URL(string: remote), let data = try? Data(contentsOf: url) {
+                return try decode(data)
+            }
+        }
+        throw InlayError.registryUnavailable
+    }
+
+    /// Places a real install may keep `registry.json`: the app resource dir, the
+    /// SwiftPM resource bundle next to the binary, the binary's own dir, and a
+    /// sibling `libexec` (Homebrew layout). Symlinks are resolved first.
+    private static func localCandidates() -> [URL] {
+        var urls: [URL] = []
+        if let res = Bundle.main.resourceURL {
+            urls.append(res.appendingPathComponent("registry.json"))
+            urls.append(res.appendingPathComponent("inlay_inlay.bundle/registry.json"))
+        }
+        if let exe = Bundle.main.executablePath ?? CommandLine.arguments.first {
+            let real = (exe as NSString).resolvingSymlinksInPath
+            let dir = (real as NSString).deletingLastPathComponent
+            for rel in ["inlay_inlay.bundle/registry.json", "registry.json",
+                        "../libexec/inlay_inlay.bundle/registry.json"] {
+                urls.append(URL(fileURLWithPath: (dir as NSString).appendingPathComponent(rel)))
+            }
+        }
+        return urls
     }
 
     /// A `--registry` value may be a local path or an http(s) URL.
