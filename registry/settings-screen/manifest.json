@@ -1,0 +1,14 @@
+{
+  "name": "settings-screen",
+  "kind": "uikit",
+  "title": "Settings Screen",
+  "description": "A model-driven settings UI with inset-grouped cards and five row types — toggle, disclosure, value, button, slider — each with a tinted SF Symbol tile. Composite: built on vertical-list.",
+  "category": "screens",
+  "minIOS": "16.0",
+  "swiftVersion": "5.9",
+  "files": [
+    { "from": "registry/settings-screen/SettingsScreen.swift", "to": "Inlay/Components/SettingsScreen.swift" }
+  ],
+  "dependencies": ["vertical-list"],
+  "usage": "let screen = SettingsScreen(sections: [\n    .init(header: \"General\", rows: [\n        .toggle(icon: UIImage(systemName: \"moon.fill\"), iconTint: .systemIndigo,\n                title: \"Dark Mode\", isOn: true) { on in print(on) },\n        .disclosure(icon: UIImage(systemName: \"bell.fill\"), iconTint: .systemRed,\n                    title: \"Notifications\") { print(\"open\") },\n    ]),\n])\nview.addSubview(screen)  // pin to edges"
+}

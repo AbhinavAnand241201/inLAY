@@ -14,11 +14,17 @@ struct Add: ParsableCommand {
     @Flag(name: .long, help: "Print the source + paste instructions instead of writing files.")
     var manual = false
 
+    @Flag(name: .long, help: "Print the plan (files, dependencies) without writing anything.")
+    var dryRun = false
+
     @OptionGroup var registryOption: RegistryOption
 
     func run() throws {
         let cwd = FileManager.default.currentDirectoryPath
         let registry = try RegistrySource.load(override: registryOption.registry)
+
+        // Fuzzy "did you mean" on a typo'd name before we resolve the graph.
+        _ = try registry.requireComponent(name)
 
         // Resolve the target + all transitive deps, dependency-first.
         let resolved = try registry.resolve(name)
@@ -47,16 +53,38 @@ struct Add: ParsableCommand {
 
             var paths: [String] = []
             for file in component.files {
-                let rel = Paths.join(base, file.to)
-                _ = try Files.write(file.source, to: rel, root: cwd)
+                // Path sanitization: reject absolute / `..` / escapes (6d in CLI.md).
+                let rel = try SafePath.validate(file.to, base: base, root: cwd)
+                if !dryRun { _ = try Files.write(file.source, to: rel, root: cwd) }
                 paths.append(rel)
             }
-            // Only the explicitly requested component records the variant.
-            let chosenVariant = component.name == name ? variant : nil
-            lock.upsert(InstalledComponent(
-                name: component.name, files: paths,
-                variant: chosenVariant, hash: hash))
+            if !dryRun {
+                // Only the explicitly requested component records the variant.
+                let chosenVariant = component.name == name ? variant : nil
+                lock.upsert(InstalledComponent(
+                    name: component.name, files: paths,
+                    variant: chosenVariant, hash: hash))
+            }
             wrote.append((component, paths))
+        }
+
+        if dryRun {
+            print("")
+            print(Term.bold("Dry run") + Term.dim(" — nothing was written."))
+            if wrote.isEmpty {
+                print("\(Term.green("✓")) \(name) and its dependencies are already installed.")
+            } else {
+                print("Would install into \(Term.bold(base == "." ? "the project root" : base + "/")):")
+                for (component, paths) in wrote {
+                    let tag = component.name == name ? "" : Term.dim(" (dependency)")
+                    print("  \(Term.cyan(component.name))\(tag)")
+                    for p in paths { print("    \(Term.dim("→")) \(p)") }
+                }
+            }
+            if !skipped.isEmpty {
+                print(Term.dim("Already installed (skipped): " + skipped.joined(separator: ", ")))
+            }
+            return
         }
 
         try lock.write(to: cwd)

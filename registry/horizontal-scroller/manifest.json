@@ -1,0 +1,20 @@
+{
+  "name": "horizontal-scroller",
+  "kind": "uikit",
+  "title": "Horizontal Scroller",
+  "description": "A generic horizontal list — pass items and a cell builder. Paging, snapping, peek (a sliver of the next item), and optional scale/alpha falloff for off-center items.",
+  "category": "lists",
+  "minIOS": "16.0",
+  "swiftVersion": "5.9",
+  "files": [
+    { "from": "registry/horizontal-scroller/HorizontalScroller.swift", "to": "Inlay/Components/HorizontalScroller.swift" }
+  ],
+  "dependencies": [],
+  "usage": "let scroller = HorizontalScroller(items: colors) { color in\n    let v = UIView(); v.backgroundColor = color; v.layer.cornerRadius = 12\n    return v\n}\nscroller.onSelect = { item, index in print(index) }\nview.addSubview(scroller)",
+  "variants": [
+    { "id": "plain", "title": "Plain", "description": "Free horizontal scroll. The default.", "config": {} },
+    { "id": "paged", "title": "Paged", "description": "Snaps one full page at a time.", "config": { "isPagingEnabled": "true" } },
+    { "id": "peek", "title": "Peek", "description": "Shows a sliver of the next item.", "config": { "peek": "32" } },
+    { "id": "falloff", "title": "Falloff", "description": "Off-center items scale and fade.", "config": { "falloff": "true" } }
+  ]
+}

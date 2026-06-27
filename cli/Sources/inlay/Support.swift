@@ -5,15 +5,21 @@ import CryptoKit
 
 enum InlayError: Error, CustomStringConvertible {
     case unknownComponent(String)
+    case unknownComponentDidYouMean(String, [String])
     case dependencyCycle(String)
     case registryUnavailable
     case registryDecode(String)
     case notInstalled(String)
+    case unsafePath(String)
+    case operationBlocked(String)
 
     var description: String {
         switch self {
         case .unknownComponent(let n):
             return "Unknown component '\(n)'. Run `inlay list` to see what's available."
+        case .unknownComponentDidYouMean(let n, let suggestions):
+            let hints = suggestions.map { "  • \($0)" }.joined(separator: "\n")
+            return "Unknown component '\(n)'. Did you mean:\n\(hints)"
         case .dependencyCycle(let c):
             return "Dependency cycle: \(c)"
         case .registryUnavailable:
@@ -22,7 +28,118 @@ enum InlayError: Error, CustomStringConvertible {
             return "Failed to read registry: \(d)"
         case .notInstalled(let n):
             return "'\(n)' isn't installed here. Run `inlay add \(n)` first."
+        case .unsafePath(let p):
+            return "Refusing to write unsafe path '\(p)' (absolute or escapes the project)."
+        case .operationBlocked(let why):
+            return why
         }
+    }
+}
+
+// MARK: - Path safety (manifest paths are untrusted input)
+
+enum SafePath {
+    /// Validates a manifest `to` path is relative with no `..`/`~`/absolute
+    /// segment, then returns the cwd-relative path to write. With no `..` and no
+    /// leading `/`, a relative path provably cannot escape `root`, so an explicit
+    /// filesystem containment check (fragile for not-yet-existing paths) is
+    /// unnecessary — and `base` is CLI-derived, not from the manifest.
+    static func validate(_ to: String, base: String, root: String) throws -> String {
+        if to.hasPrefix("/") || to.hasPrefix("~") { throw InlayError.unsafePath(to) }
+        let segments = to.split(separator: "/").map(String.init)
+        if segments.contains("..") || segments.contains(".") || segments.contains("~") {
+            throw InlayError.unsafePath(to)
+        }
+        return Paths.join(base, to)
+    }
+}
+
+// MARK: - Fuzzy matching (git-style "did you mean")
+
+enum Fuzzy {
+    static func distance(_ a: String, _ b: String) -> Int {
+        let s = Array(a), t = Array(b)
+        if s.isEmpty { return t.count }
+        if t.isEmpty { return s.count }
+        var prev = Array(0...t.count)
+        var curr = [Int](repeating: 0, count: t.count + 1)
+        for i in 1...s.count {
+            curr[0] = i
+            for j in 1...t.count {
+                let cost = s[i - 1] == t[j - 1] ? 0 : 1
+                curr[j] = min(prev[j] + 1, curr[j - 1] + 1, prev[j - 1] + cost)
+            }
+            swap(&prev, &curr)
+        }
+        return prev[t.count]
+    }
+
+    /// Nearest names to `query`: close edit distance OR substring containment.
+    static func nearest(_ query: String, in names: [String], limit: Int = 3) -> [String] {
+        let q = query.lowercased()
+        return names
+            .map { ($0, distance(q, $0.lowercased()), $0.lowercased().contains(q)) }
+            .filter { $0.1 <= 4 || $0.2 }
+            .sorted { ($0.2 ? -1 : $0.1) < ($1.2 ? -1 : $1.1) }
+            .prefix(limit)
+            .map { $0.0 }
+    }
+}
+
+// MARK: - System introspection (for `doctor`)
+
+enum SystemInfo {
+    /// Runs `xcodebuild -version` and returns e.g. "16.2", or nil if unavailable.
+    static func xcodeVersion() -> String? {
+        guard let out = run("/usr/bin/xcodebuild", ["-version"]) else { return nil }
+        // First line: "Xcode 16.2"
+        for line in out.split(separator: "\n") where line.hasPrefix("Xcode ") {
+            return line.replacingOccurrences(of: "Xcode ", with: "").trimmingCharacters(in: .whitespaces)
+        }
+        return nil
+    }
+
+    /// Best-effort IPHONEOS_DEPLOYMENT_TARGET from a pbxproj.
+    static func deploymentTarget(pbxprojAt path: String) -> String? {
+        guard let text = try? String(contentsOfFile: path, encoding: .utf8) else { return nil }
+        guard let re = try? NSRegularExpression(
+            pattern: #"IPHONEOS_DEPLOYMENT_TARGET = ([0-9.]+);"#) else { return nil }
+        let ns = text as NSString
+        guard let m = re.firstMatch(in: text, range: NSRange(location: 0, length: ns.length)),
+              m.numberOfRanges > 1 else { return nil }
+        return ns.substring(with: m.range(at: 1))
+    }
+
+    private static func run(_ launchPath: String, _ args: [String]) -> String? {
+        guard FileManager.default.isExecutableFile(atPath: launchPath) else { return nil }
+        let p = Process()
+        p.executableURL = URL(fileURLWithPath: launchPath)
+        p.arguments = args
+        let pipe = Pipe()
+        p.standardOutput = pipe
+        p.standardError = Pipe()
+        do {
+            try p.run()
+            let data = pipe.fileHandleForReading.readDataToEndOfFile()
+            p.waitUntilExit()
+            return String(decoding: data, as: UTF8.self)
+        } catch { return nil }
+    }
+}
+
+// MARK: - Version comparison ("16.0" vs "16.2")
+
+enum SemVerLite {
+    /// true if `a` >= `b` for dotted numeric versions.
+    static func gte(_ a: String, _ b: String) -> Bool {
+        let av = a.split(separator: ".").map { Int($0) ?? 0 }
+        let bv = b.split(separator: ".").map { Int($0) ?? 0 }
+        for i in 0..<max(av.count, bv.count) {
+            let x = i < av.count ? av[i] : 0
+            let y = i < bv.count ? bv[i] : 0
+            if x != y { return x > y }
+        }
+        return true
     }
 }
 

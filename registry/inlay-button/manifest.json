@@ -1,0 +1,20 @@
+{
+  "name": "inlay-button",
+  "kind": "uikit",
+  "title": "Inlay Button",
+  "description": "A tactile button with four background styles — glass, transparent, filled, soft — and three press effects: scale, touch-point ripple, and glow. Haptics included.",
+  "category": "controls",
+  "minIOS": "16.0",
+  "swiftVersion": "5.9",
+  "files": [
+    { "from": "registry/inlay-button/InlayButton.swift", "to": "Inlay/Components/InlayButton.swift" }
+  ],
+  "dependencies": ["spring-animator"],
+  "usage": "let button = InlayButton(title: \"Continue\", icon: UIImage(systemName: \"arrow.right\")) {\n    print(\"tapped\")\n}\nview.addSubview(button)",
+  "variants": [
+    { "id": "glass", "title": "Glass", "description": "Translucent blurred background.", "config": { "style": ".glass" } },
+    { "id": "transparent", "title": "Transparent", "description": "Clear background with a tinted border.", "config": { "style": ".transparent" } },
+    { "id": "filled", "title": "Filled", "description": "Solid accent background.", "config": { "style": ".filled" } },
+    { "id": "soft", "title": "Soft", "description": "Accent at low alpha.", "config": { "style": ".soft" } }
+  ]
+}

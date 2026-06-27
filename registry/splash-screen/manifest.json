@@ -1,0 +1,19 @@
+{
+  "name": "splash-screen",
+  "kind": "uikit",
+  "title": "Splash Screen",
+  "description": "A launch animation built from a single letter — fade-and-scale, stroke-draw (writes the glyph outline), or mask-reveal. Fires onFinish so you can push the home screen.",
+  "category": "animation",
+  "minIOS": "16.0",
+  "swiftVersion": "5.9",
+  "files": [
+    { "from": "registry/splash-screen/SplashView.swift", "to": "Inlay/Components/SplashView.swift" }
+  ],
+  "dependencies": ["spring-animator"],
+  "usage": "let splash = SplashView(letter: \"I\")\nsplash.onFinish = { print(\"done — push home\") }\nview.addSubview(splash)  // pin to edges",
+  "variants": [
+    { "id": "fadeScale", "title": "Fade + Scale", "description": "The letter springs in. The default.", "config": { "entrance": ".fadeScale" } },
+    { "id": "strokeDraw", "title": "Stroke Draw", "description": "The glyph outline is drawn on stroke-by-stroke.", "config": { "entrance": ".strokeDraw" } },
+    { "id": "maskReveal", "title": "Mask Reveal", "description": "The letter is revealed via a scaling mask.", "config": { "entrance": ".maskReveal" } }
+  ]
+}

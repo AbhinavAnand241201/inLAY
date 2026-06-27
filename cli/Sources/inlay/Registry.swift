@@ -38,6 +38,23 @@ struct Registry: Codable {
 
     func component(named name: String) -> Component? { index[name] }
 
+    var names: [String] { components.map(\.name) }
+
+    /// Direct dependents: installed-or-not components that list `name` as a dep.
+    func directDependents(of name: String) -> [String] {
+        components.filter { $0.dependencies.contains(name) }.map(\.name)
+    }
+
+    /// Throws `.unknownComponentDidYouMean` with fuzzy suggestions when possible,
+    /// else `.unknownComponent`.
+    func requireComponent(_ name: String) throws -> Component {
+        if let c = index[name] { return c }
+        let suggestions = Fuzzy.nearest(name, in: names)
+        throw suggestions.isEmpty
+            ? InlayError.unknownComponent(name)
+            : InlayError.unknownComponentDidYouMean(name, suggestions)
+    }
+
     /// Transitive dependencies of `name`, dependency-first, deduplicated,
     /// with `name` itself last. Throws on an unknown name (cycles can't occur:
     /// the registry is generated from an acyclic graph).

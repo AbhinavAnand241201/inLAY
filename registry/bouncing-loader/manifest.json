@@ -1,0 +1,14 @@
+{
+  "name": "bouncing-loader",
+  "kind": "uikit",
+  "title": "Bouncing Loader",
+  "description": "A playful buffering indicator — a row of dots with a larger ball bouncing above them. Auto-starts on screen and pauses when off-screen. Zero dependencies.",
+  "category": "feedback",
+  "minIOS": "16.0",
+  "swiftVersion": "5.9",
+  "files": [
+    { "from": "registry/bouncing-loader/BouncingLoader.swift", "to": "Inlay/Components/BouncingLoader.swift" }
+  ],
+  "dependencies": [],
+  "usage": "let loader = BouncingLoader()\nview.addSubview(loader)\nloader.translatesAutoresizingMaskIntoConstraints = false\nNSLayoutConstraint.activate([\n    loader.centerXAnchor.constraint(equalTo: view.centerXAnchor),\n    loader.centerYAnchor.constraint(equalTo: view.centerYAnchor),\n])"
+}

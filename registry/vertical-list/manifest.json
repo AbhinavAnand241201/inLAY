@@ -1,0 +1,18 @@
+{
+  "name": "vertical-list",
+  "kind": "uikit",
+  "title": "Vertical List",
+  "description": "A generic vertical list — pass items and a cell builder. Self-sizing rows, optional separators, inset-grouped cards, and a capped staggered fade-and-slide entrance.",
+  "category": "lists",
+  "minIOS": "16.0",
+  "swiftVersion": "5.9",
+  "files": [
+    { "from": "registry/vertical-list/VerticalList.swift", "to": "Inlay/Components/VerticalList.swift" }
+  ],
+  "dependencies": ["spring-animator"],
+  "usage": "let list = VerticalList(items: rows) { row in\n    let label = UILabel(); label.text = row.title; return label\n}\nlist.onSelect = { item, index in print(index) }\nview.addSubview(list)  // pin to edges",
+  "variants": [
+    { "id": "plain", "title": "Plain", "description": "Separated rows. The default.", "config": {} },
+    { "id": "insetGrouped", "title": "Inset Grouped", "description": "Rounded grouped-card rows.", "config": { "insetGroupedCards": "true" } }
+  ]
+}

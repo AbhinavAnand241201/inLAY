@@ -1,0 +1,18 @@
+{
+  "name": "search-bar",
+  "kind": "uikit",
+  "title": "Search Bar",
+  "description": "A search field that lifts and reveals a Cancel button on focus, with a debounced onTextChange. Glass or solid background, system clear button, submit and cancel callbacks.",
+  "category": "input",
+  "minIOS": "16.0",
+  "swiftVersion": "5.9",
+  "files": [
+    { "from": "registry/search-bar/SearchBar.swift", "to": "Inlay/Components/SearchBar.swift" }
+  ],
+  "dependencies": ["spring-animator"],
+  "usage": "let search = SearchBar()\nsearch.onTextChange = { query in print(\"search:\", query) }\nsearch.onSubmit = { query in print(\"submit:\", query) }\nview.addSubview(search)",
+  "variants": [
+    { "id": "glass", "title": "Glass", "description": "Translucent blurred background. The default.", "config": { "background": ".glass(.systemThinMaterial)" } },
+    { "id": "solid", "title": "Solid", "description": "Opaque adaptive background.", "config": { "background": ".solid(.secondarySystemBackground)" } }
+  ]
+}

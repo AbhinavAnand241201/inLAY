@@ -26,9 +26,13 @@ INLAY_REGISTRY=https://…/registry.json inlay list   # remote
 | Command | What it does |
 | --- | --- |
 | `inlay init` | Detects your `.xcodeproj`, creates the `Inlay/` folder, writes `inlay.lock.json`, and reports whether the project uses Xcode 16 buildable folders. |
-| `inlay add <name> [--variant <id>] [--manual]` | Resolves `<name>` + its dependencies (topological order) and writes each file **into the project's synchronized source folder** (so it auto-builds — no `mv` or manual target edits), updates the lockfile, and prints a usage snippet. Already-installed pieces are skipped. `--manual` prints source + paste instructions instead of writing. |
+| `inlay add <name> [--variant <id>] [--manual] [--dry-run]` | Resolves `<name>` + its dependencies (topological order) and writes each file **into the project's synchronized source folder** (so it auto-builds — no `mv` or manual target edits), updates the lockfile, and prints a usage snippet. Already-installed pieces are skipped. Paths are sanitized (no `..`/absolute escapes). `--manual` prints source + paste instructions; `--dry-run` prints the plan without writing. A typo'd name gets git-style "did you mean" suggestions. |
 | `inlay list` | Lists components grouped by category, marking installed ones. |
-| `inlay diff <name>` | Shows a unified diff between your installed copy and the registry source, so updates never silently clobber your edits. |
+| `inlay search <query>` | Fuzzy-searches names, titles, descriptions, and categories. |
+| `inlay diff <name>` | Shows a unified diff between your installed copy and the registry source. |
+| `inlay update [<name>] [--yes]` | Re-applies the registry version of installed components. Without `--yes` it only reports diffs (never silently overwrites edits); with `--yes` it applies them and updates the lockfile. |
+| `inlay remove <name> [--force] [--dry-run]` | Deletes a component's files and updates the lockfile. Refuses if another installed component still depends on it, or if you edited the files, unless `--force`. Surfaces now-orphaned dependencies. |
+| `inlay doctor` | Diagnoses setup: Xcode version, buildable-folder status, install base, deployment-target vs each component's `minIOS`, registry reachability, and whether installed files are present on disk. |
 
 ## inlay.lock.json
 

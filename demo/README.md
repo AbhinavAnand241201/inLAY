@@ -18,7 +18,7 @@ xcodegen generate              # writes InlayDemo.xcodeproj
 open InlayDemo.xcodeproj       # ⌘R on an iOS 16+ simulator
 ```
 
-Or build headless:
+Or build headless:CLI.md
 
 ```bash
 xcodebuild -project InlayDemo.xcodeproj -scheme InlayDemo \

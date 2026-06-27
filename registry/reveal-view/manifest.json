@@ -1,0 +1,18 @@
+{
+  "name": "reveal-view",
+  "kind": "uikit",
+  "title": "Reveal View",
+  "description": "A rounded rectangle or circle that springs open from the center, scaling 0 to 100%. Great for success badges, expanding panels, and attention pulses.",
+  "category": "animation",
+  "minIOS": "16.0",
+  "swiftVersion": "5.9",
+  "files": [
+    { "from": "registry/reveal-view/RevealView.swift", "to": "Inlay/Components/RevealView.swift" }
+  ],
+  "dependencies": ["spring-animator"],
+  "usage": "let badge = RevealView(configuration: {\n    var c = RevealView.Configuration.default\n    c.shape = .circle; c.fillColor = .systemGreen\n    return c\n}())\nview.addSubview(badge)  // reveals on appear, or call badge.reveal()",
+  "variants": [
+    { "id": "box", "title": "Box", "description": "Rounded rectangle that scales from center. The default.", "config": { "shape": ".roundedRect(cornerRadius: 20)" } },
+    { "id": "circle", "title": "Circle", "description": "Circle that scales from center — ideal for success badges.", "config": { "shape": ".circle" } }
+  ]
+}

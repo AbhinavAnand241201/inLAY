@@ -6,7 +6,8 @@ struct Inlay: ParsableCommand {
         commandName: "inlay",
         abstract: "Copy-paste UIKit components for iOS — shadcn/ui for iOS.",
         version: "0.1.0",
-        subcommands: [Init.self, Add.self, List.self, Diff.self],
+        subcommands: [Init.self, Add.self, List.self, Search.self, Diff.self,
+                      Update.self, Remove.self, Doctor.self],
         defaultSubcommand: List.self)
 }
 

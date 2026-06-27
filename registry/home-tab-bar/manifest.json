@@ -1,0 +1,19 @@
+{
+  "name": "home-tab-bar",
+  "kind": "uikit",
+  "title": "Home Tab Bar",
+  "description": "A custom bottom tab bar for 3-5 tabs with a springy sliding indicator (pill, underline, or dot) and an icon that lifts and tints on selection. Emits selection; you swap content.",
+  "category": "navigation",
+  "minIOS": "16.0",
+  "swiftVersion": "5.9",
+  "files": [
+    { "from": "registry/home-tab-bar/HomeTabBar.swift", "to": "Inlay/Components/HomeTabBar.swift" }
+  ],
+  "dependencies": ["spring-animator"],
+  "usage": "let bar = HomeTabBar(items: [\n    .init(icon: UIImage(systemName: \"house\"), title: \"Home\") { print(\"home\") },\n    .init(icon: UIImage(systemName: \"magnifyingglass\"), title: \"Search\") { print(\"search\") },\n    .init(icon: UIImage(systemName: \"person\"), title: \"You\") { print(\"you\") },\n])\nbar.onChange = { print(\"tab\", $0) }\nview.addSubview(bar)",
+  "variants": [
+    { "id": "pill", "title": "Pill", "description": "A pill slides behind the active tab. The default.", "config": { "indicator": ".pill" } },
+    { "id": "underline", "title": "Underline", "description": "An underline slides under the active tab.", "config": { "indicator": ".underline" } },
+    { "id": "dot", "title": "Dot", "description": "A dot marks the active tab.", "config": { "indicator": ".dot" } }
+  ]
+}
