@@ -9,7 +9,7 @@ class Inlay < Formula
   desc "Copy-paste UIKit components for iOS — shadcn/ui for iOS"
   homepage "https://github.com/AbhinavAnand241201/inLAY"
   url "https://github.com/AbhinavAnand241201/inLAY/archive/refs/tags/v0.1.0.tar.gz"
-  sha256 "b6748a7ccef09e3f1e0801c313366cd80e8439693125be70d7b026b43f9a047a"
+  sha256 "01ec998976d6941ff5bfeb5c78db89b7159c604190e18f659e08c5f7cb1f0d80"
   license "MIT"
   head "https://github.com/AbhinavAnand241201/inLAY.git", branch: "main"
 
