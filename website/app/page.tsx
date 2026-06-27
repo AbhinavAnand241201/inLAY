@@ -166,7 +166,7 @@ function About() {
               code, make it yours, ship it.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
-              <a href="https://github.com/" target="_blank" rel="noreferrer" className="brut-btn-ghost">
+              <a href="https://github.com/AbhinavAnand241201/inLAY" target="_blank" rel="noreferrer" className="brut-btn-ghost">
                 GitHub
               </a>
               <a href="https://twitter.com/" target="_blank" rel="noreferrer" className="brut-btn-ghost">

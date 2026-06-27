@@ -24,7 +24,7 @@ export function Nav() {
             Creator
           </Link>
           <a
-            href="https://github.com/"
+            href="https://github.com/AbhinavAnand241201/inLAY"
             target="_blank"
             rel="noreferrer"
             className="brut-btn-ghost px-3 py-2 text-xs"

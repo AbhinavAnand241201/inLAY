@@ -1,0 +1,94 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+# Cancel in-progress runs for the same ref.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  registry:
+    name: Registry validates & is in sync
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate (deps resolve, graph acyclic)
+        run: swift scripts/build-registry.swift --check
+      - name: registry.json matches the source (components in sync)
+        run: |
+          cp registry.json /tmp/committed.json
+          swift scripts/build-registry.swift
+          node -e '
+            const a = require("/tmp/committed.json");
+            const b = require(process.cwd() + "/registry.json");
+            const strip = (r) => JSON.stringify(r.components);
+            if (strip(a) !== strip(b)) {
+              console.error("✗ registry.json is stale — run scripts/sync-registry.sh and commit.");
+              process.exit(1);
+            }
+            console.log("✓ registry.json components are in sync (" + b.components.length + " components).");
+          '
+
+  components:
+    name: Components compile for iOS 16
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - name: Type-check every component against the iOS simulator SDK
+        run: |
+          SDK=$(xcrun --sdk iphonesimulator --show-sdk-path)
+          xcrun swiftc -sdk "$SDK" -target arm64-apple-ios16.0-simulator \
+            -typecheck registry/*/*.swift
+          echo "✓ all components type-check"
+
+  cli:
+    name: CLI builds & runs
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build
+        working-directory: cli
+        run: swift build
+      - name: Smoke test (list + search resolve from the bundled registry)
+        working-directory: cli
+        run: |
+          swift run inlay list
+          swift run inlay search loader
+
+  demo:
+    name: Demo app builds for the Simulator
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install XcodeGen
+        run: brew install xcodegen
+      - name: Generate the Xcode project
+        working-directory: demo/InlayDemo
+        run: xcodegen generate
+      - name: Build for a generic iOS Simulator
+        working-directory: demo/InlayDemo
+        run: |
+          xcodebuild -project InlayDemo.xcodeproj -scheme InlayDemo \
+            -destination 'generic/platform=iOS Simulator' \
+            -configuration Debug build CODE_SIGNING_ALLOWED=NO | tail -20
+
+  website:
+    name: Website builds
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: website/package-lock.json
+      - name: Install dependencies
+        working-directory: website
+        run: npm ci
+      - name: Build static export
+        working-directory: website
+        run: npm run build

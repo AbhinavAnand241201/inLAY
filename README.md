@@ -1,8 +1,13 @@
 # Inlay
 
+[![CI](https://github.com/AbhinavAnand241201/inLAY/actions/workflows/ci.yml/badge.svg)](https://github.com/AbhinavAnand241201/inLAY/actions/workflows/ci.yml)
+[![Deploy website](https://github.com/AbhinavAnand241201/inLAY/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/AbhinavAnand241201/inLAY/actions/workflows/deploy-pages.yml)
+
 > Copy-paste UIKit components for iOS — **shadcn/ui for iOS.**
 > Search a component, run one command, and the source lands in your Xcode
 > project ready to customize. You own the code; Inlay isn't a dependency you import.
+
+**Gallery:** https://abhinavanand241201.github.io/inLAY/ · 15 components and counting.
 
 ```bash
 inlay add floating-toolbar
@@ -57,6 +62,21 @@ cd demo/InlayDemo && xcodegen generate && \
 # Run the website (Next.js)
 cd website && npm install && npm run dev     # → http://localhost:3000
 ```
+
+## CI / CD
+
+Two GitHub Actions workflows in [`.github/workflows/`](.github/workflows/):
+
+- **`ci.yml`** (every PR + push) — validates the registry (deps resolve, acyclic,
+  `registry.json` in sync), type-checks every component against the iOS 16 SDK,
+  builds + smoke-tests the CLI, builds the demo app for the Simulator, and builds
+  the website.
+- **`deploy-pages.yml`** (push to `main` touching `website/`) — static-exports the
+  Next.js site with `BASE_PATH=/inLAY` and deploys it to GitHub Pages.
+
+**One-time setup:** in the repo, **Settings → Pages → Build and deployment →
+Source: GitHub Actions**. After that, every push to `main` republishes the
+gallery at the URL above.
 
 ## Adding a component
 

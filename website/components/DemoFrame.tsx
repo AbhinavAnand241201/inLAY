@@ -23,7 +23,7 @@ export function DemoFrame({ name }: { name: string }) {
           playsInline
           onError={() => setHasVideo(false)}
         >
-          <source src={`/demos/${name}.mp4`} type="video/mp4" />
+          <source src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/demos/${name}.mp4`} type="video/mp4" />
         </video>
       ) : (
         <Preview name={name} />
