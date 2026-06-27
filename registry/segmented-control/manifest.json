@@ -1,0 +1,10 @@
+{ "name": "segmented-control", "kind": "uikit", "title": "Segmented Control",
+  "description": "A sliding segmented control with a spring indicator (pill, underline, or solid), icon+title segments, and crossfading labels. A premium take on UISegmentedControl.",
+  "category": "controls", "minIOS": "16.0", "swiftVersion": "5.9",
+  "files": [{ "from": "registry/segmented-control/SegmentedControl.swift", "to": "Inlay/Components/SegmentedControl.swift" }],
+  "dependencies": ["spring-animator"],
+  "usage": "let control = SegmentedControl(items: [\"Day\", \"Week\", \"Month\"])\ncontrol.onChange = { print(\"selected\", $0) }\nview.addSubview(control)",
+  "variants": [
+    { "id": "pill", "title": "Pill", "description": "A pill slides behind the selection. The default.", "config": { "style": ".pill" } },
+    { "id": "underline", "title": "Underline", "description": "An underline tracks the selection.", "config": { "style": ".underline" } },
+    { "id": "solid", "title": "Solid", "description": "Solid background container.", "config": { "style": ".solidBackground" } } ] }

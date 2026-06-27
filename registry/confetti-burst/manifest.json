@@ -1,0 +1,10 @@
+{ "name": "confetti-burst", "kind": "uikit", "title": "Confetti Burst",
+  "description": "A celebratory particle overlay (rectangles, circles, triangles, or your image) with rain, fountain, and radial-burst modes, spin, gravity, and a one-shot burst(). Touch-transparent. Zero dependencies.",
+  "category": "feedback", "minIOS": "16.0", "swiftVersion": "5.9",
+  "files": [{ "from": "registry/confetti-burst/ConfettiView.swift", "to": "Inlay/Components/ConfettiView.swift" }],
+  "dependencies": [],
+  "usage": "let confetti = ConfettiView()\nview.addSubview(confetti)   // fills the view\nconfetti.burst()",
+  "variants": [
+    { "id": "burst", "title": "Burst", "description": "Radial blast from a point. The default for celebrations.", "config": { "direction": ".burst" } },
+    { "id": "rain", "title": "Rain", "description": "Falls from the top.", "config": { "direction": ".rain" } },
+    { "id": "fountain", "title": "Fountain", "description": "Shoots up, then falls.", "config": { "direction": ".fountain" } } ] }

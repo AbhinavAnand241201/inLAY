@@ -47,6 +47,46 @@ targets:
         group: Inlay/Components
       - path: ../../registry/settings-screen/SettingsScreen.swift
         group: Inlay/Components
+      - path: ../../registry/segmented-control/SegmentedControl.swift
+        group: Inlay/Components
+      - path: ../../registry/otp-code-input/OTPCodeInput.swift
+        group: Inlay/Components
+      - path: ../../registry/stepper/Stepper.swift
+        group: Inlay/Components
+      - path: ../../registry/rating-stars/RatingView.swift
+        group: Inlay/Components
+      - path: ../../registry/toast/Toast.swift
+        group: Inlay/Components
+      - path: ../../registry/progress-ring/ProgressRing.swift
+        group: Inlay/Components
+      - path: ../../registry/skeleton-shimmer/SkeletonView.swift
+        group: Inlay/Components
+      - path: ../../registry/bottom-sheet/BottomSheet.swift
+        group: Inlay/Components
+      - path: ../../registry/side-drawer/SideDrawer.swift
+        group: Inlay/Components
+      - path: ../../registry/confetti-burst/ConfettiView.swift
+        group: Inlay/Components
+      - path: ../../registry/segmented-pager/SegmentedPager.swift
+        group: Inlay/Components
+      - path: ../../registry/fab-speed-dial/SpeedDialButton.swift
+        group: Inlay/Components
+      - path: ../../registry/number-roller/NumberRoller.swift
+        group: Inlay/Components
+      - path: ../../registry/typewriter-label/TypewriterLabel.swift
+        group: Inlay/Components
+      - path: ../../registry/expandable-card/ExpandableCard.swift
+        group: Inlay/Components
+      - path: ../../registry/swipe-actions-row/SwipeActionRow.swift
+        group: Inlay/Components
+      - path: ../../registry/swipe-deck/SwipeDeck.swift
+        group: Inlay/Components
+      - path: ../../registry/parallax-header/ParallaxHeader.swift
+        group: Inlay/Components
+      - path: ../../registry/tilt-card/TiltCard.swift
+        group: Inlay/Components
+      - path: ../../registry/pull-to-refresh/PullToRefresh.swift
+        group: Inlay/Components
     settings:
       base:
         INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES

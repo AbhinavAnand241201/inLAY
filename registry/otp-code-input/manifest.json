@@ -1,0 +1,10 @@
+{ "name": "otp-code-input", "kind": "uikit", "title": "OTP Code Input",
+  "description": "One-time passcode entry with auto-advancing boxes, SMS autofill, paste support, a glowing focused box, digit pop-in, and a shake-on-error animation.",
+  "category": "controls", "minIOS": "16.0", "swiftVersion": "5.9",
+  "files": [{ "from": "registry/otp-code-input/OTPCodeInput.swift", "to": "Inlay/Components/OTPCodeInput.swift" }],
+  "dependencies": ["spring-animator"],
+  "usage": "let otp = OTPCodeInput()\notp.onComplete = { code in print(\"entered\", code) }\n// otp.shakeForError() on a wrong code\nview.addSubview(otp)",
+  "variants": [
+    { "id": "box", "title": "Box", "description": "Bordered boxes. The default.", "config": { "style": ".box" } },
+    { "id": "underline", "title": "Underline", "description": "Underlined slots.", "config": { "style": ".underline" } },
+    { "id": "secure", "title": "Secure", "description": "Masks digits as dots.", "config": { "isSecure": "true" } } ] }

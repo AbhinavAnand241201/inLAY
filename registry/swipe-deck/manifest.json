@@ -1,0 +1,10 @@
+{ "name": "swipe-deck", "kind": "uikit", "title": "Swipe Deck",
+  "description": "A Tinder-style draggable card stack: the top card rotates with the drag, like/nope overlays track direction, cards fling past a threshold, and the peeked stack animates forward. Generic, with undo.",
+  "category": "cards", "minIOS": "16.0", "swiftVersion": "5.9",
+  "files": [{ "from": "registry/swipe-deck/SwipeDeck.swift", "to": "Inlay/Components/SwipeDeck.swift" }],
+  "dependencies": ["spring-animator"],
+  "usage": "let deck = SwipeDeck(cards: profiles) { profile in makeCard(profile) }\ndeck.onSwipe = { card, direction in print(direction) }\nview.addSubview(deck)",
+  "variants": [
+    { "id": "standard", "title": "Standard", "description": "Left/right swiping. The default.", "config": {} },
+    { "id": "withUndo", "title": "With Undo", "description": "Allows undoing the last swipe.", "config": { "allowsUndo": "true" } },
+    { "id": "superLike", "title": "Super Like", "description": "Also allows an up-swipe.", "config": { "allowsUpSwipe": "true" } } ] }

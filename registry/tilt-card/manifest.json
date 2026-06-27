@@ -1,0 +1,9 @@
+{ "name": "tilt-card", "kind": "uikit", "title": "Tilt Card",
+  "description": "An interactive 3D parallax tilt card with a moving specular sheen and a shadow that shifts with the tilt — trading-card feel. Driven by touch or device gyroscope.",
+  "category": "cards", "minIOS": "16.0", "swiftVersion": "5.9",
+  "files": [{ "from": "registry/tilt-card/TiltCard.swift", "to": "Inlay/Components/TiltCard.swift" }],
+  "dependencies": ["spring-animator"],
+  "usage": "let tilt = TiltCard(contentView: posterView)\nview.addSubview(tilt)",
+  "variants": [
+    { "id": "touch", "title": "Touch", "description": "Tilts toward the touch point. The default.", "config": { "useMotion": "false" } },
+    { "id": "gyro", "title": "Gyro", "description": "Tilts with device motion.", "config": { "useMotion": "true" } } ] }

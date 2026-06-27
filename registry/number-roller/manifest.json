@@ -1,0 +1,10 @@
+{ "name": "number-roller", "kind": "uikit", "title": "Number Roller",
+  "description": "An odometer where only the digits that change roll vertically to their new value, with grouping separators, prefix/suffix, fraction digits, and a per-column cascade. Great for counters and prices.",
+  "category": "text", "minIOS": "16.0", "swiftVersion": "5.9",
+  "files": [{ "from": "registry/number-roller/NumberRoller.swift", "to": "Inlay/Components/NumberRoller.swift" }],
+  "dependencies": ["spring-animator"],
+  "usage": "let roller = NumberRoller()\nview.addSubview(roller)\nroller.setValue(1234, animated: true)",
+  "variants": [
+    { "id": "plain", "title": "Plain", "description": "Grouped integer. The default.", "config": {} },
+    { "id": "currency", "title": "Currency", "description": "Prefix + fraction digits.", "config": { "prefix": "$", "fractionDigits": "2" } },
+    { "id": "percent", "title": "Percent", "description": "Suffix.", "config": { "suffix": "%" } } ] }

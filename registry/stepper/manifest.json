@@ -1,0 +1,9 @@
+{ "name": "stepper", "kind": "uikit", "title": "Stepper",
+  "description": "A value stepper whose number rolls vertically on change, with press feedback, accelerating long-press repeat, and bounds-aware fading. Pill or split layout.",
+  "category": "controls", "minIOS": "16.0", "swiftVersion": "5.9",
+  "files": [{ "from": "registry/stepper/Stepper.swift", "to": "Inlay/Components/Stepper.swift" }],
+  "dependencies": ["spring-animator"],
+  "usage": "let stepper = Stepper()\nstepper.onChange = { print(\"value\", $0) }\nview.addSubview(stepper)",
+  "variants": [
+    { "id": "pill", "title": "Pill", "description": "One rounded capsule. The default.", "config": { "style": ".pill" } },
+    { "id": "split", "title": "Split", "description": "Separate buttons + value chip.", "config": { "style": ".split" } } ] }

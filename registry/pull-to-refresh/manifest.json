@@ -1,0 +1,10 @@
+{ "name": "pull-to-refresh", "kind": "uikit", "title": "Pull to Refresh",
+  "description": "A custom refresher for any scroll view whose indicator draws on proportionally to the pull (stroke circle, morphing shape, or bouncing dots), then animates while refreshing. Replaces UIRefreshControl.",
+  "category": "feedback", "minIOS": "16.0", "swiftVersion": "5.9",
+  "files": [{ "from": "registry/pull-to-refresh/PullToRefresh.swift", "to": "Inlay/Components/PullToRefresh.swift" }],
+  "dependencies": ["spring-animator"],
+  "usage": "let refresher = PullToRefresh()\nrefresher.attach(to: scrollView) { loadData() }\n// call refresher.endRefreshing() when done",
+  "variants": [
+    { "id": "strokeCircle", "title": "Stroke Circle", "description": "Draws a circle as you pull. The default.", "config": { "style": ".strokeCircle" } },
+    { "id": "morphingShape", "title": "Morphing Shape", "description": "A shape scales and rotates.", "config": { "style": ".morphingShape" } },
+    { "id": "bouncingDots", "title": "Bouncing Dots", "description": "Dots grow and bounce.", "config": { "style": ".bouncingDots" } } ] }

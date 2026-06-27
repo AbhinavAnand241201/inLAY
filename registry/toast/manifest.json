@@ -1,0 +1,11 @@
+{ "name": "toast", "kind": "uikit", "title": "Toast",
+  "description": "A transient notification banner with info/success/warning/error styles, spring entrance, swipe-to-dismiss, a draining progress bar, glass or solid background, and stacking. Static show() API.",
+  "category": "feedback", "minIOS": "16.0", "swiftVersion": "5.9",
+  "files": [{ "from": "registry/toast/Toast.swift", "to": "Inlay/Components/Toast.swift" }],
+  "dependencies": ["spring-animator"],
+  "usage": "Toast.show(\"Saved to your library\", style: .success)\n// Toast.show(\"Something went wrong\", style: .error)",
+  "variants": [
+    { "id": "info", "title": "Info", "description": "Neutral informational toast. The default.", "config": { "style": ".info" } },
+    { "id": "success", "title": "Success", "description": "Green success toast.", "config": { "style": ".success" } },
+    { "id": "warning", "title": "Warning", "description": "Amber warning toast.", "config": { "style": ".warning" } },
+    { "id": "error", "title": "Error", "description": "Red error toast.", "config": { "style": ".error" } } ] }

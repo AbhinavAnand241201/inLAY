@@ -1,0 +1,9 @@
+{ "name": "expandable-card", "kind": "uikit", "title": "Expandable Card",
+  "description": "A card that springs from a compact summary to a detailed view, crossfading content with a rotating chevron and an optional background scrim. Sizes correctly in stacks and tables.",
+  "category": "cards", "minIOS": "16.0", "swiftVersion": "5.9",
+  "files": [{ "from": "registry/expandable-card/ExpandableCard.swift", "to": "Inlay/Components/ExpandableCard.swift" }],
+  "dependencies": ["spring-animator"],
+  "usage": "let card = ExpandableCard(collapsedContent: summaryView, expandedContent: detailView)\ncard.onToggle = { expanded in print(expanded) }\nview.addSubview(card)",
+  "variants": [
+    { "id": "plain", "title": "Plain", "description": "Expands in place. The default.", "config": {} },
+    { "id": "scrim", "title": "Scrim", "description": "Dims the surroundings when expanded.", "config": { "dimsSurroundings": "true" } } ] }

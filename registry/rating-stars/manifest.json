@@ -1,0 +1,9 @@
+{ "name": "rating-stars", "kind": "uikit", "title": "Rating Stars",
+  "description": "A tap-or-drag star rating with spring pop on fill, half-star support via a partial mask, and any SF Symbol as the symbol. Interactive or display-only.",
+  "category": "controls", "minIOS": "16.0", "swiftVersion": "5.9",
+  "files": [{ "from": "registry/rating-stars/RatingView.swift", "to": "Inlay/Components/RatingView.swift" }],
+  "dependencies": ["spring-animator"],
+  "usage": "let rating = RatingView()\nrating.onChange = { print(\"rated\", $0) }\nview.addSubview(rating)",
+  "variants": [
+    { "id": "whole", "title": "Whole", "description": "Whole-star ratings. The default.", "config": { "allowsHalfRatings": "false" } },
+    { "id": "half", "title": "Half", "description": "Allows half-star ratings.", "config": { "allowsHalfRatings": "true" } } ] }

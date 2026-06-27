@@ -1,0 +1,9 @@
+{ "name": "side-drawer", "kind": "uikit", "title": "Side Drawer",
+  "description": "A slide-in side menu with a spring, a fading backdrop, optional parallax on the dimmed background, and an interactive edge-pan to open or close. Self-contained.",
+  "category": "overlays", "minIOS": "16.0", "swiftVersion": "5.9",
+  "files": [{ "from": "registry/side-drawer/SideDrawer.swift", "to": "Inlay/Components/SideDrawer.swift" }],
+  "dependencies": ["spring-animator"],
+  "usage": "let drawer = SideDrawer(contentView: menuView)\ndrawer.present(in: view)   // drawer.toggle()",
+  "variants": [
+    { "id": "leading", "title": "Leading", "description": "Slides in from the leading edge. The default.", "config": { "edge": ".leading" } },
+    { "id": "trailing", "title": "Trailing", "description": "Slides in from the trailing edge.", "config": { "edge": ".trailing" } } ] }

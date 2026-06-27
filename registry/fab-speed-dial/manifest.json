@@ -1,0 +1,10 @@
+{ "name": "fab-speed-dial", "kind": "uikit", "title": "FAB Speed Dial",
+  "description": "A floating action button that expands into staggered mini-actions with labels, a rotating main icon, and an optional backdrop dim. Expands in any direction.",
+  "category": "navigation", "minIOS": "16.0", "swiftVersion": "5.9",
+  "files": [{ "from": "registry/fab-speed-dial/SpeedDialButton.swift", "to": "Inlay/Components/SpeedDialButton.swift" }],
+  "dependencies": ["spring-animator"],
+  "usage": "let fab = SpeedDialButton(mainIcon: UIImage(systemName: \"plus\"), actions: [\n    .init(icon: UIImage(systemName: \"camera\"), title: \"Photo\") { },\n    .init(icon: UIImage(systemName: \"doc\"), title: \"File\") { },\n])\nview.addSubview(fab)",
+  "variants": [
+    { "id": "up", "title": "Up", "description": "Actions expand upward. The default.", "config": { "expandDirection": ".up" } },
+    { "id": "down", "title": "Down", "description": "Actions expand downward.", "config": { "expandDirection": ".down" } },
+    { "id": "left", "title": "Left", "description": "Actions expand to the left.", "config": { "expandDirection": ".left" } } ] }

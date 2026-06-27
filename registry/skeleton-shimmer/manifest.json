@@ -1,0 +1,10 @@
+{ "name": "skeleton-shimmer", "kind": "uikit", "title": "Skeleton Shimmer",
+  "description": "Loading placeholders with a sweeping gradient shimmer, plus ready-made builders for placeholder text lines and list-cell cards. Zero dependencies.",
+  "category": "feedback", "minIOS": "16.0", "swiftVersion": "5.9",
+  "files": [{ "from": "registry/skeleton-shimmer/SkeletonView.swift", "to": "Inlay/Components/SkeletonView.swift" }],
+  "dependencies": [],
+  "usage": "let placeholder = SkeletonView.card()\nview.addSubview(placeholder)\n// or SkeletonView.lines(3)",
+  "variants": [
+    { "id": "solid", "title": "Solid", "description": "A single shimmering block.", "config": {} },
+    { "id": "lines", "title": "Lines", "description": "Stacked placeholder text lines.", "config": {} },
+    { "id": "card", "title": "Card", "description": "Avatar + lines list-cell placeholder.", "config": {} } ] }

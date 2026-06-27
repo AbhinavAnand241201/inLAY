@@ -1,0 +1,10 @@
+{ "name": "bottom-sheet", "kind": "uikit", "title": "Bottom Sheet",
+  "description": "A draggable bottom sheet with medium/large/custom detents, rubber-banding, a grabber, an interpolating backdrop dim, and swipe-to-dismiss. Self-contained — presents over any view.",
+  "category": "overlays", "minIOS": "16.0", "swiftVersion": "5.9",
+  "files": [{ "from": "registry/bottom-sheet/BottomSheet.swift", "to": "Inlay/Components/BottomSheet.swift" }],
+  "dependencies": ["spring-animator"],
+  "usage": "let sheet = BottomSheet(contentView: myContentView)\nsheet.present(in: view)\n// sheet.move(to: .large)",
+  "variants": [
+    { "id": "medium", "title": "Medium", "description": "Opens at roughly half height.", "config": { "initialDetent": ".medium" } },
+    { "id": "large", "title": "Large", "description": "Opens near full height.", "config": { "initialDetent": ".large" } },
+    { "id": "fraction", "title": "Custom", "description": "A custom height fraction detent.", "config": { "initialDetent": ".fraction(0.4)" } } ] }

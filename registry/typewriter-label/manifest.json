@@ -1,0 +1,9 @@
+{ "name": "typewriter-label", "kind": "uikit", "title": "Typewriter Label",
+  "description": "Text that types itself in with a blinking caret, plus a cycling mode that types, deletes, and retypes a list of strings — the hero-tagline effect. Zero dependencies.",
+  "category": "text", "minIOS": "16.0", "swiftVersion": "5.9",
+  "files": [{ "from": "registry/typewriter-label/TypewriterLabel.swift", "to": "Inlay/Components/TypewriterLabel.swift" }],
+  "dependencies": [],
+  "usage": "let label = TypewriterLabel()\nview.addSubview(label)\nlabel.cycle([\"Build faster.\", \"Ship sooner.\", \"Own your code.\"])",
+  "variants": [
+    { "id": "single", "title": "Single", "description": "Types one string once.", "config": {} },
+    { "id": "cycling", "title": "Cycling", "description": "Types, deletes, and retypes a list — looping.", "config": { "loops": "true" } } ] }

@@ -1,0 +1,9 @@
+{ "name": "segmented-pager", "kind": "uikit", "title": "Segmented Pager",
+  "description": "Swipeable tab pages with a header indicator (underline or pill) that tracks the scroll offset live, plus tap-to-page. The Twitter-profile pattern, done right.",
+  "category": "navigation", "minIOS": "16.0", "swiftVersion": "5.9",
+  "files": [{ "from": "registry/segmented-pager/SegmentedPager.swift", "to": "Inlay/Components/SegmentedPager.swift" }],
+  "dependencies": ["spring-animator"],
+  "usage": "let pager = SegmentedPager(pages: [\n    .init(title: \"Posts\", view: postsView),\n    .init(title: \"Media\", view: mediaView),\n])\npager.onChange = { print(\"page\", $0) }\nview.addSubview(pager)",
+  "variants": [
+    { "id": "underline", "title": "Underline", "description": "An underline tracks the active tab. The default.", "config": { "indicatorStyle": ".underline" } },
+    { "id": "pill", "title": "Pill", "description": "A pill tracks the active tab.", "config": { "indicatorStyle": ".pill" } } ] }

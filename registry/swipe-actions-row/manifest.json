@@ -1,0 +1,10 @@
+{ "name": "swipe-actions-row", "kind": "uikit", "title": "Swipe Actions Row",
+  "description": "Custom swipe-to-reveal actions on either side of any content view, with spring snapping, rubber-band overscroll, and a full-swipe gesture that triggers the first action.",
+  "category": "cards", "minIOS": "16.0", "swiftVersion": "5.9",
+  "files": [{ "from": "registry/swipe-actions-row/SwipeActionRow.swift", "to": "Inlay/Components/SwipeActionRow.swift" }],
+  "dependencies": ["spring-animator"],
+  "usage": "let row = SwipeActionRow(contentView: cell, trailingActions: [\n    .init(icon: UIImage(systemName: \"trash\"), title: \"Delete\", backgroundColor: .systemRed, tint: .white) { delete() },\n])\nview.addSubview(row)",
+  "variants": [
+    { "id": "trailing", "title": "Trailing", "description": "Actions on the trailing edge. The default.", "config": {} },
+    { "id": "leading", "title": "Leading", "description": "Actions on the leading edge.", "config": {} },
+    { "id": "fullSwipe", "title": "Full Swipe", "description": "A full swipe triggers the first action.", "config": { "fullSwipeEnabled": "true" } } ] }

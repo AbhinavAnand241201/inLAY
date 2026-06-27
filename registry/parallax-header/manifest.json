@@ -1,0 +1,9 @@
+{ "name": "parallax-header", "kind": "uikit", "title": "Parallax Header",
+  "description": "A stretchy image header for a scroll view: pulling down zooms the image, scrolling up collapses it with an optional blur, a legibility gradient, and a fading title. Zero-wiring via KVO. Zero dependencies.",
+  "category": "cards", "minIOS": "16.0", "swiftVersion": "5.9",
+  "files": [{ "from": "registry/parallax-header/ParallaxHeader.swift", "to": "Inlay/Components/ParallaxHeader.swift" }],
+  "dependencies": [],
+  "usage": "let header = ParallaxHeader(image: UIImage(named: \"cover\"))\nheader.attach(to: scrollView)",
+  "variants": [
+    { "id": "stretch", "title": "Stretch", "description": "Zooms on pull. The default.", "config": { "stretchOnPull": "true" } },
+    { "id": "blurCollapse", "title": "Blur Collapse", "description": "Blurs as it collapses.", "config": { "blurOnCollapse": "true" } } ] }

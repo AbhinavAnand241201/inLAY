@@ -1,0 +1,10 @@
+{ "name": "progress-ring", "kind": "uikit", "title": "Progress Ring",
+  "description": "A circular determinate progress indicator with a gradient stroke, rounded caps, a counting percentage label, an optional glowing tip, and an indeterminate spinning mode. Zero dependencies.",
+  "category": "feedback", "minIOS": "16.0", "swiftVersion": "5.9",
+  "files": [{ "from": "registry/progress-ring/ProgressRing.swift", "to": "Inlay/Components/ProgressRing.swift" }],
+  "dependencies": [],
+  "usage": "let ring = ProgressRing()\nview.addSubview(ring)\nring.setProgress(0.72, animated: true)",
+  "variants": [
+    { "id": "solid", "title": "Solid", "description": "Single-color stroke.", "config": {} },
+    { "id": "gradient", "title": "Gradient", "description": "Gradient stroke from start to end color.", "config": { "gradientStartColor": ".systemBlue", "gradientEndColor": ".systemPurple" } },
+    { "id": "indeterminate", "title": "Indeterminate", "description": "A rotating arc for unknown progress.", "config": {} } ] }
